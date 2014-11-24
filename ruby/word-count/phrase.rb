@@ -5,12 +5,8 @@ class Phrase
   end
 
   def word_count
-    @count ||= @words.inject({}) do |hash, word| 
-      if hash.include?(word)
-        hash[word] += 1
-      else
-        hash[word] = 1
-      end
+    @count ||= @words.inject(Hash.new(0)) do |hash, word| 
+      hash[word] += 1
       hash
     end
   end
