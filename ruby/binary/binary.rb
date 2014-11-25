@@ -11,12 +11,9 @@ class Binary
 
   def convert binary
     decimal = 0
-    binary.split(//).reverse.each_with_index do |digit, power|
-      if digit =~ /\D/
-        return 0
-      else
-        decimal += digit.to_i * 2**power 
-      end
+    binary.chars.reverse.each_with_index do |digit, power|
+      return 0 if digit =~ /\D/
+      decimal += digit.to_i * 2**power 
     end
     decimal
   end
