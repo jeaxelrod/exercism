@@ -1,5 +1,5 @@
 class Array
-  def accumulate  
-    self.each_index { |index| self[index] = yield(self[index]) }
+  def accumulate &operation
+    self.each_index { |index| self[index] = operation.call(self[index]) }
   end
 end
