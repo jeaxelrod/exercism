@@ -1,31 +1,22 @@
-(ns bob)
+(ns bob
+  (:require [clojure.string :as str]))
+
+(defn- lastChar [str]
+  (get str (- (.length str) 1)))
 
 (defn- forceful [talk]
   (if (re-find #"[A-Z]" talk)
-    (= talk (clojure.string/upper-case talk))
-    false
-  )
-)
+    (= talk (str/upper-case talk))))
 
 (defn- question [talk]
-  (= (get talk 
-          (- (.length talk) 1)) 
-     \?)
-)
+  (= (lastChar talk) \?))
 
 (defn- silence [talk]
-  (clojure.string/blank? talk)
-)
+  (str/blank? talk))
 
 (defn response-for [talk]
-  (if (silence talk)
-    "Fine. Be that way!"
-    (if (forceful talk)
-      "Whoa, chill out!"
-      (if (question talk)
-        "Sure."
-        "Whatever."
-      )
-    )
-  )
-)
+  (cond
+    (silence talk)  "Fine. Be that way!"
+    (forceful talk) "Whoa, chill out!"
+    (question talk) "Sure."
+    :else           "Whatever."))
